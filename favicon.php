@@ -56,7 +56,7 @@ Class UBC_Favicon{
             global $pagenow;
             if ('media-upload.php' == $pagenow || 'async-upload.php' == $pagenow) {
                     // Now we'll replace the 'Insert into Post Button inside Thickbox' 
-                    add_filter( 'gettext', 'replace_thickbox_text' , 1, 2 );
+                    add_filter( 'gettext', array($this, 'replace_thickbox_text'), 1, 2 );
             }
     }
     
