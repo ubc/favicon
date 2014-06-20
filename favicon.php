@@ -12,7 +12,7 @@ Author URI: http://isit.arts.ubc.ca
 Class UBC_Favicon{
 
 
-    function init(){
+    public static function init(){
         // Initialize Theme options
        add_action( 'after_setup_theme', array( __CLASS__,'favicon_options_init') );    
        
@@ -30,7 +30,7 @@ Class UBC_Favicon{
         
        
     }
-    function favicon_get_default_options() {
+    public static function favicon_get_default_options() {
             $options = array(
                     'favicon' => '//cdn.ubc.ca/clf/7.0.2/img/favicon.ico'
             );
@@ -38,7 +38,7 @@ Class UBC_Favicon{
     }
 
 
-    function favicon_options_init() {
+    public static function favicon_options_init() {
          $favicon_options = get_option( 'theme_favicon_options' );
 
              // Are our options saved in the DB?
@@ -52,16 +52,16 @@ Class UBC_Favicon{
     }
 
 
-    function favicon_options_setup() {
+    public static function favicon_options_setup() {
             global $pagenow;
             if ('media-upload.php' == $pagenow || 'async-upload.php' == $pagenow) {
                     // Now we'll replace the 'Insert into Post Button inside Thickbox' 
-                    add_filter( 'gettext', array($this, 'replace_thickbox_text'), 1, 2 );
+                    add_filter( 'gettext', array(__CLASS__, 'replace_thickbox_text'), 1, 2 );
             }
     }
     
 
-    function replace_thickbox_text($translated_text, $text ) {	
+    public static function replace_thickbox_text($translated_text, $text ) {	
             if ( 'Insert into Post' == $text ) {
                     $referer = strpos( wp_get_referer(), 'favicon-settings' );
                     if ( $referer != '' ) {
@@ -73,13 +73,13 @@ Class UBC_Favicon{
     }
 
     // Add "Favicon" link to the "Appearance" menu
-    function favicon_menu_options() {
+    public static function favicon_menu_options() {
             //add_theme_page( $page_title, $menu_title, $capability, $menu_slug, $function);
          add_theme_page('Favicon', 'Favicon', 'edit_theme_options', 'favicon-settings', array( __CLASS__,'favicon_admin_options_page') );
     }
 
 
-    function favicon_admin_options_page() {
+    public static function favicon_admin_options_page() {
             ?>
                     <!-- 'wrap','submit','icon32','button-primary' and 'button-secondary' are classes 
                     for a good WP Admin Panel viewing and are predefined by WP CSS -->
@@ -113,7 +113,7 @@ Class UBC_Favicon{
             <?php
     }
 
-    function favicon_options_validate( $input ) {
+    public static function favicon_options_validate( $input ) {
             $default_options = UBC_Favicon::favicon_get_default_options();
             $valid_input = $default_options;
 
@@ -141,7 +141,7 @@ Class UBC_Favicon{
             return $valid_input;
     }
 
-    function delete_image( $image_url ) {
+    public static function delete_image( $image_url ) {
             global $wpdb;
 
             // We need to get the image's meta ID..
@@ -155,7 +155,7 @@ Class UBC_Favicon{
     }
 
     /********************* JAVASCRIPT ******************************/
-    function favicon_options_enqueue_scripts() {
+    public static function favicon_options_enqueue_scripts() {
             wp_register_script( 'favicon-upload', plugins_url( '/js/favicon.js' , __FILE__ ), array('jquery','media-upload','thickbox') );	
 
             if ( 'appearance_page_favicon-settings' == get_current_screen() -> id ) {
@@ -173,7 +173,7 @@ Class UBC_Favicon{
     
 
 
-    function favicon_options_settings_init() {
+    public static function favicon_options_settings_init() {
             register_setting( 'theme_favicon_options', 'theme_favicon_options', array( __CLASS__,'favicon_options_validate') );
 
             // Add a form section for the Favicon
@@ -188,7 +188,7 @@ Class UBC_Favicon{
 
     
 
-    function display_favicon(){
+    public static function display_favicon(){
             $favicon_options = get_option( 'theme_favicon_options' );
             $default_favicon_option = UBC_Favicon::favicon_get_default_options();
 
@@ -199,13 +199,13 @@ Class UBC_Favicon{
             endif;
     }
 
-    function favicon_settings_header_text() {
+    public static function favicon_settings_header_text() {
             ?>
                     <p><?php _e( '', 'favicon' ); ?></p>
             <?php
     }
 
-    function favicon_setting_favicon() {
+    public static function favicon_setting_favicon() {
             $favicon_options = get_option( 'theme_favicon_options' );
             
             if(!isset($favicon_options['favicon'])){
