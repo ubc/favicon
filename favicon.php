@@ -3,7 +3,7 @@
 Plugin Name: UBC Favicon Plugin
 Plugin URI: 
 Description: Allows you to change the favicon on your site
-Version: 1
+Version: 1.0.0
 Author: Amir Entezaralmahdi | Arts ISIT
 Licence: GPLv2
 Author URI: http://isit.arts.ubc.ca
